@@ -1,3 +1,4 @@
+import { cineCreacionDTO } from './../cine';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -12,4 +13,7 @@ export class CrearCineComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  guardarCambios(cine: cineCreacionDTO){
+    console.log(cine);
+  }
 }
