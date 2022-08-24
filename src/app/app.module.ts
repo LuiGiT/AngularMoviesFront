@@ -31,7 +31,8 @@ import { FormularioActoresComponent } from './actores/formulario-actores/formula
 import { InputImgComponent } from './utilidades/input-img/input-img.component';
 import { InputMarkdownComponent } from './utilidades/input-markdown/input-markdown.component';
 import { MarkdownModule } from 'ngx-markdown';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import {LeafletModule} from '@asymmetrik/ngx-leaflet'
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { FormularioCineComponent } from './cines/formulario-cine/formulario-cine.component';
 import { MapaComponent } from './utilidades/mapa/mapa.component';
 import { FormularioPeliculaComponent } from './peliculas/formulario-pelicula/formulario-pelicula.component';
@@ -80,7 +81,8 @@ import { MostrarErroresComponent } from './utilidades/mostrar-errores/mostrar-er
     FormsModule,
     LeafletModule,
     HttpClientModule,
-    MarkdownModule.forRoot()
+    MarkdownModule.forRoot(),
+    SweetAlert2Module.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
