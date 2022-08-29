@@ -11,7 +11,7 @@ export class GenerosService {
 
   constructor(private http: HttpClient) { }
 
-  private apiURL = environment.apiRUL + 'generos';
+  private apiURL = environment.apiURL + 'generos';
 
   public obtenerTodos(pagina: number, cantidadRegistrosAMostrar: number): Observable<any>{
     let params = new HttpParams();
@@ -35,7 +35,7 @@ export class GenerosService {
   public borrar(id: number) {
     return this.http.delete(`${this.apiURL}/${id}`);
   }
-  
+
 }
 
 

@@ -23,5 +23,6 @@ export class CrearActorComponent implements OnInit {
     .subscribe(() => {
       this.router.navigate(['/actores']);
     }, errores => this.errores = parsearErroresAPI(errores))
+    console.log(actor);
   }
 }
