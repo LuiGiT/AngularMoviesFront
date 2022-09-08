@@ -1,4 +1,4 @@
-export interface MultiPleSelectorModel{
+export interface MultipleSelectorModel{
     llave: number;
     valor: string;
 }

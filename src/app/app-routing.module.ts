@@ -13,6 +13,8 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EditarPeliculaComponent } from './peliculas/editar-pelicula/editar-pelicula.component';
+import { DetallePeliculaComponent } from './peliculas/detalle-pelicula/detalle-pelicula.component';
+
 
 const routes: Routes = [
   {path: '', component: LandingPageComponent},
@@ -28,6 +30,8 @@ const routes: Routes = [
   {path: 'peliculas/crear', component: CrearPeliculaComponent},
   {path: 'peliculas/editar/:id', component: EditarPeliculaComponent},
   {path: 'peliculas/buscar', component: FiltroPeliculasComponent},
+  {path: 'pelicula/:id', component: DetallePeliculaComponent},
+
   {path: '**', redirectTo: ''}
 ];
 

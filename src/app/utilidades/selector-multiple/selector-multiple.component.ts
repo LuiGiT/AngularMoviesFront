@@ -1,4 +1,4 @@
-import { MultiPleSelectorModel } from './selectorMultiple';
+import { MultipleSelectorModel } from './MultipleSelectorModel';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -11,31 +11,31 @@ export class SelectorMultipleComponent implements OnInit {
   constructor() { }
 
   @Input()
-  Seleccionados: MultiPleSelectorModel[] = [];
+  Seleccionados: MultipleSelectorModel[] = [];
 
   @Input()
-  Noseleccionados: MultiPleSelectorModel[] = [];
+  NoSeleccionados: MultipleSelectorModel[] = [];
 
   ngOnInit(): void {
   }
 
-  seleccionar (item: MultiPleSelectorModel, index: number){
+  seleccionar(item: MultipleSelectorModel, index: number){
     this.Seleccionados.push(item);
-    this.Noseleccionados.splice(index, 1);
+    this.NoSeleccionados.splice(index, 1);
   }
 
-  deseleccionar (item: MultiPleSelectorModel, index: number){
-    this.Noseleccionados.push(item);
+  deseleccionar(item: MultipleSelectorModel, index: number){
+    this.NoSeleccionados.push(item);
     this.Seleccionados.splice(index, 1);
   }
 
   seleccionarTodo(){
-    this.Seleccionados.push(...this.Noseleccionados);
-    this.Noseleccionados = [];
+    this.Seleccionados.push(...this.NoSeleccionados);
+    this.NoSeleccionados = [];
   }
 
   deseleccionarTodo(){
-    this.Noseleccionados.push(...this.Seleccionados);
+    this.NoSeleccionados.push(...this.Seleccionados);
     this.Seleccionados = [];
   }
 

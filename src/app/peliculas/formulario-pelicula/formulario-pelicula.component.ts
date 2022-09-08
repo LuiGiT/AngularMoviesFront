@@ -1,7 +1,8 @@
-import { MultiPleSelectorModel } from './../../utilidades/selector-multiple/selectorMultiple';
+import { MultipleSelectorModel } from '../../utilidades/selector-multiple/MultipleSelectorModel';
 import { PeliculaCreacionDTO, PeliculaDTO } from './../pelicula';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { actorPeliculaDTO } from 'src/app/actores/actor';
 
 @Component({
   selector: 'app-formulario-pelicula',
@@ -9,32 +10,37 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./formulario-pelicula.component.css']
 })
 export class FormularioPeliculaComponent implements OnInit {
-
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder) {}
 
   form: FormGroup;
 
   @Input()
-  modelo: PeliculaDTO
+  errores: string[] = [];
+
+  @Input()
+  modelo: PeliculaDTO;
 
   @Output()
-  OnSubmit: EventEmitter<PeliculaCreacionDTO> = new EventEmitter<PeliculaCreacionDTO>();
+  OnSubmit: EventEmitter<PeliculaCreacionDTO> = new EventEmitter<
+    PeliculaCreacionDTO
+  >();
 
-  generosNoSeleccionados: MultiPleSelectorModel[] = [
-    {llave: 1, valor: 'Drama'},
-    {llave: 2, valor: 'Accion'},
-    {llave: 3, valor: 'Comedia'},
-  ];
+  @Input()
+  generosNoSeleccionados: MultipleSelectorModel[];
 
-  generosSeleccionados: MultiPleSelectorModel[] = [];
+  @Input()
+  generosSeleccionados: MultipleSelectorModel[] = [];
 
-  cinesNoSeleccionados: MultiPleSelectorModel[] = [
-    {llave: 1, valor: 'Sambil'},
-    {llave: 2, valor: 'Agora'},
-    {llave: 3, valor: 'Acropolis'},
-  ];
+  @Input()
+  cinesNoSeleccionados: MultipleSelectorModel[];
 
-  cinesSeleccionados: MultiPleSelectorModel[] = [];
+  @Input()
+  cinesSeleccionados: MultipleSelectorModel[] = [];
+
+  @Input()
+  actoresSeleccionados: actorPeliculaDTO[] = [];
+
+  imagenCambiada = false;
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -49,26 +55,40 @@ export class FormularioPeliculaComponent implements OnInit {
       trailer: '',
       fechaLanzamiento: '',
       poster: '',
-      generosId: '',
-      cinesId: ''
+      generosIds: '',
+      cinesIds: '',
+      actores: ''
     });
 
-    if(this.modelo != undefined){
+    if (this.modelo !== undefined) {
       this.form.patchValue(this.modelo);
     }
   }
-  archivoSeleccionado(archivo: File){
+
+  archivoSeleccionado(archivo: File) {
     this.form.get('poster').setValue(archivo);
+    this.imagenCambiada = true;
   }
-  changeMarkdown(texto){
+
+  changeMarkdown(texto) {
     this.form.get('resumen').setValue(texto);
   }
-  guardarCambios(){
+
+  guardarCambios() {
     const generosIds = this.generosSeleccionados.map(val => val.llave);
-    this.form.get('generosId').setValue(generosIds);
+    this.form.get('generosIds').setValue(generosIds);
 
     const cinesIds = this.cinesSeleccionados.map(val => val.llave);
-    this.form.get('cinesId').setValue(cinesIds);
+    this.form.get('cinesIds').setValue(cinesIds);
+
+    const actores = this.actoresSeleccionados.map(val => {
+      return {id: val.id, personaje: val.personaje}
+    });
+    this.form.get('actores').setValue(actores);
+
+    if (!this.imagenCambiada){
+      this.form.patchValue({'poster': null});
+    }
 
     this.OnSubmit.emit(this.form.value);
   }

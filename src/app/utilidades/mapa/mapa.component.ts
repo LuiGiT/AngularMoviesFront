@@ -1,4 +1,4 @@
-import { Coordenada } from './coordenada';
+import { Coordenada, CoordenadaConMensaje } from './coordenada';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import {
   tileLayer,
@@ -15,46 +15,62 @@ import {
   styleUrls: ['./mapa.component.css']
 })
 export class MapaComponent implements OnInit {
-
-  constructor() { }
+  constructor() {}
 
   @Input()
-  CoordenadasIniciales: Coordenada[] = [];
+  coordenadasIniciales: CoordenadaConMensaje[] = [];
+
+  @Input()
+  soloLectura: boolean = false;
 
   @Output()
   coordenadaSeleccionada: EventEmitter<Coordenada> = new EventEmitter<Coordenada>();
 
   ngOnInit(): void {
-    this.capas = this.CoordenadasIniciales.map(valor => marker([valor.latitud, valor.longitud]));
+    this.capas = this.coordenadasIniciales.map((valor) => {
+      let marcador = marker([valor.latitud, valor.longitud]);
+      if (valor.mensaje) {
+        marcador.bindPopup(valor.mensaje, { autoClose: false, autoPan: false });
+      }
+      return marcador;
+    });
   }
 
   options = {
     layers: [
-      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
+      tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '...',
+      }),
     ],
     zoom: 14,
-    center: latLng(18.47812849673783, -69.9408531188965)
+    center: latLng(18.482849960148176, -69.93999481201173),
   };
 
   capas: Marker<any>[] = [];
 
-  manejarClick(event: LeafletMouseEvent){
-    const latitud = event.latlng.lat;
-    const longitud = event.latlng.lng;
-    console.log({latitud, longitud});
+  manejarClick(event: LeafletMouseEvent) {
+    if (!this.soloLectura) {
+      const latitud = event.latlng.lat;
+      const longitud = event.latlng.lng;
+      console.log({ latitud, longitud });
 
-    this.capas = [];
-    this.capas.push(
-      marker([latitud, longitud], {
-        icon: icon({
-          iconSize: [25, 41],
-          iconAnchor: [13, 41],
-          iconUrl: 'marker-icon.png',
-          iconRetinaUrl: 'marker-icon-2x.png',
-          shadowUrl: 'assets/marker-shadow.png',
-        }),
-      })
-    );
-    this.coordenadaSeleccionada.emit({latitud: latitud, longitud: longitud});
+      this.capas = [];
+      this.capas.push(
+        marker([latitud, longitud], {
+          icon: icon({
+            iconSize: [25, 41],
+            iconAnchor: [13, 41],
+            iconUrl: 'marker-icon.png',
+            iconRetinaUrl: 'marker-icon-2x.png',
+            shadowUrl: 'assets/marker-shadow.png',
+          }),
+        })
+      );
+      this.coordenadaSeleccionada.emit({
+        latitud: latitud,
+        longitud: longitud,
+      });
+    }
   }
 }
