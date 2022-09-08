@@ -9,16 +9,20 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./formulario-cine.component.css']
 })
 export class FormularioCineComponent implements OnInit {
+  constructor(private formBuilder: FormBuilder) {}
 
-  constructor(private formBuilder: FormBuilder) { }
+  form: FormGroup;
 
-  form : FormGroup;
+  @Input()
+  errores: string[] = [];
 
   @Input()
   modelo: cineCreacionDTO;
 
   @Output()
-  guardarCambios: EventEmitter<cineCreacionDTO> = new EventEmitter<cineCreacionDTO>();
+  guardarCambios: EventEmitter<cineCreacionDTO> = new EventEmitter<
+    cineCreacionDTO
+  >();
 
   coordenadaInicial: Coordenada[] = [];
 
@@ -44,16 +48,20 @@ export class FormularioCineComponent implements OnInit {
       ],
     });
 
-    if(this.modelo !== undefined){
+    if (this.modelo !== undefined) {
       this.form.patchValue(this.modelo);
-      this.coordenadaInicial.push({latitud: this.modelo.latitud, longitud: this.modelo.longitud});
+      this.coordenadaInicial.push({
+        latitud: this.modelo.latitud,
+        longitud: this.modelo.longitud,
+      });
     }
   }
 
-  coordenadaSeleccionada(coordenada: Coordenada){
+  coordenadaSeleccionada(coordenada: Coordenada) {
     this.form.patchValue(coordenada);
   }
-  OnSubmit(){
+
+  OnSubmit() {
     this.guardarCambios.emit(this.form.value);
   }
 }
