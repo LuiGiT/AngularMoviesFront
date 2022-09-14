@@ -7,9 +7,15 @@ export function toBase64(file: File){
     })
 }
 
-export function parsearErroresAPI(response: any): string[]{
-
+export function parsearErroresAPI(response: any): string[] {
   const resultado: string[] = [];
+
+  console.log(response.status);
+
+  if (response.status === 500){
+    resultado.push('Ha ocurrido un error en el servidor. Favor intentar más tarde');
+    return resultado;
+  }
 
   if (response.error) {
     if (typeof response.error === 'string') {

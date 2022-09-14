@@ -40,6 +40,10 @@ import { SelectorMultipleComponent } from './utilidades/selector-multiple/select
 import { AutocompleteActoresComponent } from './actores/autocomplete-actores/autocomplete-actores.component';
 import { MostrarErroresComponent } from './utilidades/mostrar-errores/mostrar-errores.component';
 import { DetallePeliculaComponent } from './peliculas/detalle-pelicula/detalle-pelicula.component';
+import { AutorizadoComponent } from './seguridad/autorizado/autorizado.component';
+import { LoginComponent } from './seguridad/login/login.component';
+import { RegistroComponent } from './seguridad/registro/registro.component';
+import { FormularioAutenticacionComponent } from './seguridad/formulario-autenticacion/formulario-autenticacion.component';
 
 
 @NgModule({
@@ -72,7 +76,11 @@ import { DetallePeliculaComponent } from './peliculas/detalle-pelicula/detalle-p
     SelectorMultipleComponent,
     AutocompleteActoresComponent,
     MostrarErroresComponent,
-    DetallePeliculaComponent
+    DetallePeliculaComponent,
+    AutorizadoComponent,
+    LoginComponent,
+    RegistroComponent,
+    FormularioAutenticacionComponent
   ],
   imports: [
     BrowserModule,
